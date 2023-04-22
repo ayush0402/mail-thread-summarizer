@@ -64,7 +64,6 @@ const writeEmailWithGPT = async (mailContext) => {
       presence_penalty: 0.0,
     });
 
-    // console.log("response from mail writer", response);
     return response.data.choices[0].message.content;
   } catch (error) {
     throw error.response
@@ -74,9 +73,7 @@ const writeEmailWithGPT = async (mailContext) => {
 };
 
 InboxSDK.load(2, "sdk_gmailsummarizer_3dede7e5f7").then((sdk) => {
-  // the SDK has been loaded, now do something with it!
   sdk.Compose.registerComposeViewHandler(async (composeView) => {
-    // a compose view has come into existence, do something with it!
     composeView.addButton({
       title: "Auto write email",
       iconUrl:
@@ -84,8 +81,6 @@ InboxSDK.load(2, "sdk_gmailsummarizer_3dede7e5f7").then((sdk) => {
       async onClick(event) {
         let mailContext = event.composeView.getTextContent();
         let mailDraft = await writeEmailWithGPT(mailContext);
-        // console.log(mailDraft);
-        // debug why its always sending subject only.
         event.composeView.setBodyText(mailDraft);
       },
     });
