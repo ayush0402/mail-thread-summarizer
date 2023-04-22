@@ -3,7 +3,7 @@ import * as InboxSDK from "@inboxsdk/core";
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "YOUR_API_KEY_HERE",
+  apiKey: process.env.OPEN_AI_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -29,7 +29,6 @@ const getSummaryFromGPT = async (mailContent) => {
       top_p: 1.0,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,
-      stop: ["\n"],
     });
 
     return response.data.choices[0].message.content;
